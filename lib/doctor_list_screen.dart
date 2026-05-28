@@ -52,6 +52,50 @@ class DoctorListScreen extends StatelessWidget {
         rating: 4.6,
         imageUrl: 'assets/images/dokter_habyb.jpg',
       ),
+      Doctor(
+        id: '5',
+        name: 'dr. Deddy Hernanto, Sp.J',
+        specialty: 'Dokter Jantung',
+        icon: '❤️',
+        schedule: 'Senin - Jumat, 08.00 - 16.00',
+        biography:
+            'Spesialis jantung yang berpengalaman lebih dari 15 tahun. Ahli dalam penanganan penyakit kardiovaskular dan memberikan edukasi kesehatan jantung.',
+        rating: 4.8,
+        imageUrl: 'assets/images/dokter_deddy.jpg',
+      ),
+      Doctor(
+        id: '6',
+        name: 'drg. Siti Nur Amalia, Sp.Ortho',
+        specialty: 'Dokter Gigi Spesialis Ortho',
+        icon: '😁',
+        schedule: 'Senin - Kamis, 10.00 - 17.00',
+        biography:
+            'Spesialis ortodontik yang terkenal dengan teknik perawatan gigi rapi yang modern dan nyaman tanpa rasa sakit.',
+        rating: 4.7,
+        imageUrl: 'assets/images/dokter_siti.jpg',
+      ),
+      Doctor(
+        id: '7',
+        name: 'dr. Andri Setiawan, Sp.KJ',
+        specialty: 'Dokter Psikiatri',
+        icon: '🧠',
+        schedule: 'Senin - Jumat, 09.00 - 17.00',
+        biography:
+            'Spesialis kesehatan mental dengan fokus pada gangguan kecemasan dan depresi. Memberikan konsultasi dan terapi yang mendalam.',
+        rating: 4.6,
+        imageUrl: 'assets/images/dokter_andri.jpg',
+      ),
+      Doctor(
+        id: '8',
+        name: 'dr. Rina Marlina, Sp.KK',
+        specialty: 'Dokter Dermatologi',
+        icon: '✨',
+        schedule: 'Selasa - Sabtu, 10.00 - 18.00',
+        biography:
+            'Dokter kulit dengan spesialisasi dalam perawatan kulit estetik dan medis. Terkenal dengan hasil perawatan yang memuaskan.',
+        rating: 4.5,
+        imageUrl: 'assets/images/dokter_rina.jpg',
+      ),
     ];
 
     return Scaffold(

@@ -26,14 +26,10 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 30),
             // Profile Avatar
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF7ED5A0),
-              ),
-              child: const Icon(Icons.person, size: 60, color: Colors.white),
+            CircleAvatar(
+              radius: 60,
+              backgroundImage: const AssetImage('assets/images/gambar1.jpg'),
+              backgroundColor: const Color(0xFF7ED5A0),
             ),
             const SizedBox(height: 20),
             // Name
@@ -69,6 +65,12 @@ class ProfileScreen extends StatelessWidget {
                     icon: Icons.location_on,
                     title: 'Address',
                     subtitle: 'Surabaya, Indonesia',
+                  ),
+                  const SizedBox(height: 16),
+                  _buildProfileMenuItem(
+                    icon: Icons.camera_alt,
+                    title: 'Instagram',
+                    subtitle: '@frellvalliere',
                   ),
                   const SizedBox(height: 40),
                   // Logout Button
