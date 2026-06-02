@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  final String name;
+  final String nbi;
+  final String email;
+  final String alamat;
+  final String instagram;
+
+  const WelcomeScreen({
+    super.key,
+    this.name = "Farrel Pramuditya Nugroho",
+    this.nbi = "1462300172",
+    this.email = "",
+    this.alamat = "",
+    this.instagram = "",
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +49,9 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
 
               // NBI
-              const Text(
-                "1462300172",
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+              Text(
+                nbi,
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
               ),
 
               const SizedBox(height: 20),
@@ -53,9 +66,12 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 20),
 
               // Username
-              const Text(
-                "Farrel Pramuditya Nugroho",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               const SizedBox(height: 30),
