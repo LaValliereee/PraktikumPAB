@@ -183,6 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "Masukan Nama",
                             Icons.person,
                           ),
+                          textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Nama tidak boleh kosong";
@@ -198,12 +199,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "Masukan NBI",
                             Icons.badge,
                           ),
+                          textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "NBI tidak boleh kosong";
                             }
                             return null;
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                           keyboardType: TextInputType.number,
                         ),
                         const SizedBox(height: 14),
@@ -213,7 +218,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: _buildInputDecoration(
                             "Buat PIN",
                             Icons.lock,
-                          ),
+                          ).copyWith(counterText: ''),
+                          textInputAction: TextInputAction.next,
+                          maxLength: 10,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "PIN tidak boleh kosong";
@@ -225,6 +232,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                           keyboardType: TextInputType.number,
                           obscureText: true,
+                          enableSuggestions: false,
+                          autocorrect: false,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
@@ -237,6 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "Masukan Email",
                             Icons.email,
                           ),
+                          textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Email tidak boleh kosong";
@@ -256,6 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "Masukan Alamat",
                             Icons.location_on,
                           ),
+                          textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Alamat tidak boleh kosong";
@@ -271,6 +282,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "Masukan Akun Instagram",
                             Icons.camera_alt,
                           ),
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (_) => _handleRegister(),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Instagram tidak boleh kosong";

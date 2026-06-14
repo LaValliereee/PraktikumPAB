@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'doctor_list_screen.dart';
 import 'movie_screen.dart';
+import 'pin_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,39 +12,39 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
 
-  final List<Widget> _screens = [
+  // Urutan menu: Home, Movie (Video Kesehatan), Secret (PIN), Profile
+  final List<Widget> _pages = [
     const DoctorListScreen(),
     const MovieScreen(),
+    const PinScreen(),
     const ProfileScreen(),
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex],
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        elevation: 15,
         selectedItemColor: const Color(0xFF7ED5A0),
-        unselectedItemColor: Colors.grey[500],
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
+        unselectedItemColor: Colors.grey,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.video_library),
             label: 'Video Kesehatan',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.lock_person),
+            label: 'Secret',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
