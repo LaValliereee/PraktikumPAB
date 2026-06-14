@@ -23,8 +23,8 @@ class DoctorDetailScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF00897B).withOpacity(0.2),
-                      const Color(0xFF00897B).withOpacity(0.1),
+                      const Color(0xFF00897B).withOpacity(0.4),
+                      const Color(0xFF00897B).withOpacity(0.6),   
                     ],
                   ),
                   shape: BoxShape.circle,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'pin_screen.dart';
 import 'register_screen.dart';
 import 'user_storage.dart';
-import 'welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            hasProfile ? const WelcomeScreen() : const RegisterScreen(),
+            hasProfile ? const PinScreen() : const RegisterScreen(),
       ),
     );
   }

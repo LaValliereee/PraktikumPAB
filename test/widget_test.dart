@@ -1,30 +1,42 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:prak_pba/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('register saves profile and shows profile data', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+
     await tester.pumpWidget(const MyApp());
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Daftar'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.enterText(find.byType(EditableText).at(0), 'Budi Santoso');
+    await tester.enterText(find.byType(EditableText).at(1), '1462300001');
+    await tester.enterText(find.byType(EditableText).at(2), '1234');
+    await tester.enterText(find.byType(EditableText).at(3), 'budi@example.com');
+    await tester.enterText(find.byType(EditableText).at(4), 'Surabaya');
+    await tester.enterText(find.byType(EditableText).at(5), '@budi');
+    await tester.ensureVisible(find.text('Daftar'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Daftar'));
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Welcome to'), findsOneWidget);
+    expect(find.text('Budi Santoso'), findsOneWidget);
+    expect(find.text('1462300001'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Masuk'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Masuk'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Profile'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('budi@example.com'), findsOneWidget);
+    expect(find.text('Surabaya'), findsOneWidget);
+    expect(find.text('@budi'), findsOneWidget);
   });
 }

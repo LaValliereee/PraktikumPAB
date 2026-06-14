@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'user_storage.dart';
 import 'welcome_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -12,6 +14,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _nbiController;
+  late TextEditingController _pinController;
   late TextEditingController _emailController;
   late TextEditingController _alamatController;
   late TextEditingController _instagramController;
@@ -21,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     _nameController = TextEditingController();
     _nbiController = TextEditingController();
+    _pinController = TextEditingController();
     _emailController = TextEditingController();
     _alamatController = TextEditingController();
     _instagramController = TextEditingController();
@@ -30,25 +34,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void dispose() {
     _nameController.dispose();
     _nbiController.dispose();
+    _pinController.dispose();
     _emailController.dispose();
     _alamatController.dispose();
     _instagramController.dispose();
     super.dispose();
   }
 
-  void _handleRegister() {
+  Future<void> _handleRegister() async {
     if (_formKey.currentState!.validate()) {
+      await UserStorage.saveProfile(
+        name: _nameController.text,
+        nbi: _nbiController.text,
+        email: _emailController.text,
+        alamat: _alamatController.text,
+        instagram: _instagramController.text,
+        pin: _pinController.text,
+      );
+
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => WelcomeScreen(
-            name: _nameController.text,
-            nbi: _nbiController.text,
-            email: _emailController.text,
-            alamat: _alamatController.text,
-            instagram: _instagramController.text,
-          ),
-        ),
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
       );
     }
   }
@@ -85,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              const Color(0xFF7ED5A0).withOpacity(0.1),
+              const Color(0xFF7ED5A0).withValues(alpha: 0.1),
               const Color(0xFFE0F7F0),
             ],
           ),
@@ -96,7 +103,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                // Header Card dengan Background Gradient
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -113,27 +119,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   child: Column(
                     children: [
-                      // Image
                       ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: Image.network(
-                          "https://i.ibb.co.com/pB8QPGzm/Wavy-Gen-01-Single-07.jpg",
+                        child: Image.asset(
+                          "assets/images/gambar3.jpg",
                           height: 140,
                           fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: Colors.white12,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: const Icon(
-                                Icons.image,
-                                color: Colors.white,
-                                size: 40,
-                              ),
-                            );
-                          },
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -168,14 +159,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                // Form Card
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF7ED5A0).withOpacity(0.15),
+                        color: const Color(0xFF7ED5A0).withValues(alpha: 0.15),
                         blurRadius: 20,
                         offset: const Offset(0, 10),
                       ),
@@ -187,7 +177,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Nama Field
                         TextFormField(
                           controller: _nameController,
                           decoration: _buildInputDecoration(
@@ -203,7 +192,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 14),
 
-                        // NBI Field
                         TextFormField(
                           controller: _nbiController,
                           decoration: _buildInputDecoration(
@@ -216,10 +204,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             return null;
                           },
+                          keyboardType: TextInputType.number,
                         ),
                         const SizedBox(height: 14),
 
-                        // Email Field
+                        TextFormField(
+                          controller: _pinController,
+                          decoration: _buildInputDecoration(
+                            "Buat PIN",
+                            Icons.lock,
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "PIN tidak boleh kosong";
+                            }
+                            if (value.length < 4) {
+                              return "PIN minimal 4 digit";
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                        ),
+                        const SizedBox(height: 14),
+
                         TextFormField(
                           controller: _emailController,
                           decoration: _buildInputDecoration(
@@ -235,10 +246,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             return null;
                           },
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         const SizedBox(height: 14),
 
-                        // Alamat Field
                         TextFormField(
                           controller: _alamatController,
                           decoration: _buildInputDecoration(
@@ -254,7 +265,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 14),
 
-                        // Instagram Field
                         TextFormField(
                           controller: _instagramController,
                           decoration: _buildInputDecoration(
@@ -270,7 +280,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         const SizedBox(height: 28),
 
-                        // Daftar Button
                         Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -282,7 +291,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(14),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF7ED5A0).withOpacity(0.3),
+                                color: const Color(
+                                  0xFF7ED5A0,
+                                ).withValues(alpha: 0.3),
                                 blurRadius: 15,
                                 offset: const Offset(0, 8),
                               ),
